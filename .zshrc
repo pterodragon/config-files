@@ -1,3 +1,10 @@
+alias vim=nvim
+export VISUAL=vim
+export EDITOR="$VISUAL"
+if [ -f ~/.dir_colors/dircolors ]
+    then eval `dircolors ~/.dir_colors/dircolors`
+fi
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -101,3 +108,4 @@ prompt_context() {
     # prompt_segment black default "%(!.%{%F{yellow}%}.)$USER"
   fi
 }
+
