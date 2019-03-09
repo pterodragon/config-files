@@ -35,6 +35,11 @@ Plug 'ekalinin/Dockerfile.vim'
 Plug 'artur-shaik/vim-javacomplete2', {'for': 'java'}
 Plug 'lervag/vimtex', {'for': 'tex'}
 Plug 'https://github.com/ternjs/tern_for_vim', {'for': 'javascript', 'do': 'npm install'}
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install',
+  \ 'branch': 'release/1.x',
+  \ 'for': [
+    \ 'javascript'] }
 
 call plug#end()
 
@@ -177,6 +182,9 @@ autocmd FileType javascript setlocal omnifunc=tern#Complete
 
 " vimtex related
 let g:vimtex_compiler_latexmk = { 'continuous' : 0 }
+
+" prettier related
+let g:prettier#config#semi = 'false'
 
 " general
 
