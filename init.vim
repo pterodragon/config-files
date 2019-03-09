@@ -18,10 +18,9 @@ Plug 'https://github.com/frankier/neovim-colors-solarized-truecolor-only'
 Plug 'https://github.com/lyuts/vim-rtags', { 'for': 'cpp' }
 Plug 'https://github.com/Shougo/unite.vim'
 Plug 'https://github.com/flazz/vim-colorschemes'
-Plug 'https://github.com/Valloric/YouCompleteMe', {'do': './install.py --clang-completer --tern-completer'}
+Plug 'https://github.com/Valloric/YouCompleteMe', {'do': 'python3 ./install.py --clang-completer --tern-completer'}
 Plug 'https://github.com/vim-scripts/a.vim'
 " Plug 'https://github.com/arakashic/chromatica.nvim'
-Plug 'https://github.com/peterhoeg/vim-qml'
 Plug 'https://github.com/Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'https://github.com/python-mode/python-mode', {'for': ['python'], 'branch': 'develop'}
 Plug 'https://github.com/eagletmt/ghcmod-vim', {'for': ['haskell']}
@@ -33,7 +32,9 @@ Plug 'pboettch/vim-cmake-syntax'
 Plug 'https://github.com/rhysd/vim-clang-format'
 " Plug 'https://github.com/mechatroner/rainbow_csv', {'for': ['csv']}
 Plug 'ekalinin/Dockerfile.vim'
-Plug 'artur-shaik/vim-javacomplete2'
+Plug 'artur-shaik/vim-javacomplete2', {'for': 'java'}
+Plug 'lervag/vimtex', {'for': 'tex'}
+Plug 'https://github.com/ternjs/tern_for_vim', {'for': 'javascript', 'do': 'npm install'}
 
 call plug#end()
 
@@ -167,9 +168,15 @@ let g:unite_source_grep_default_opts = '--no-heading --no-color -k -H'
 
 " vim-javacomplete2 related
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
+autocmd FileType javascript setlocal omnifunc=tern#Complete
+
+
 
 " rainbow_csv related
 " let g:rcsv_colorpairs = [['red', 'red'], ['blue', 'blue'], ['green', 'green'], ['NONE', 'NONE'], ['darkred', 'darkred'], ['darkblue', 'darkblue'], ['darkgreen', 'darkgreen'], ['darkmagenta', 'darkmagenta'], ['darkcyan', 'darkcyan']]
+
+" vimtex related
+let g:vimtex_compiler_latexmk = { 'continuous' : 0 }
 
 " general
 
