@@ -7,41 +7,70 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'https://github.com/mileszs/ack.vim'
 Plug 'https://github.com/mhartington/oceanic-next'
 Plug 'https://github.com/junegunn/vim-easy-align'
-" Plug 'https://github.com/edkolev/tmuxline.vim'
 Plug 'https://github.com/tpope/vim-surround'
+Plug 'https://github.com/tpope/vim-repeat'
 Plug 'https://github.com/vim-airline/vim-airline'
-" Plug 'https://github.com/kien/rainbow_parentheses.vim'
 Plug 'https://github.com/junegunn/rainbow_parentheses.vim'
-Plug 'https://github.com/neovimhaskell/haskell-vim', {'for': ['haskell']}
 Plug 'https://github.com/frankier/neovim-colors-solarized-truecolor-only'
-" addtionally, download rtag (for the server)
-Plug 'https://github.com/lyuts/vim-rtags', { 'for': 'cpp' }
-Plug 'https://github.com/Shougo/unite.vim'
-Plug 'https://github.com/flazz/vim-colorschemes'
-Plug 'https://github.com/Valloric/YouCompleteMe', {'do': 'python3 ./install.py --clang-completer --tern-completer'}
-Plug 'https://github.com/vim-scripts/a.vim'
-" Plug 'https://github.com/arakashic/chromatica.nvim'
-Plug 'https://github.com/Shougo/vimproc.vim', {'do' : 'make'}
-Plug 'https://github.com/python-mode/python-mode', {'for': ['python'], 'branch': 'develop'}
-Plug 'https://github.com/eagletmt/ghcmod-vim', {'for': ['haskell']}
-Plug 'https://github.com/eagletmt/neco-ghc', {'for': ['haskell']}
-Plug 'https://github.com/ervandew/supertab', {'for': ['haskell']}
+Plug 'https://github.com/vim-scripts/a.vim', {'for': ['cpp']}
 Plug 'https://github.com/NLKNguyen/papercolor-theme'
 Plug 'https://github.com/vim-airline/vim-airline-themes'
 Plug 'pboettch/vim-cmake-syntax'
-Plug 'https://github.com/rhysd/vim-clang-format'
-" Plug 'https://github.com/mechatroner/rainbow_csv', {'for': ['csv']}
 Plug 'ekalinin/Dockerfile.vim'
-Plug 'artur-shaik/vim-javacomplete2', {'for': 'java'}
 Plug 'lervag/vimtex', {'for': 'tex'}
-Plug 'https://github.com/ternjs/tern_for_vim', {'for': 'javascript', 'do': 'npm install'}
-Plug 'prettier/vim-prettier', {
-  \ 'do': 'yarn install',
-  \ 'branch': 'release/1.x',
-  \ 'for': [
-    \ 'javascript'] }
 
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+
+Plug 'w0rp/ale'
 call plug#end()
+
+" vim lsp related
+nnoremap <S-k> :LspDefinition<CR>
+autocmd FileType c,cpp,python nmap gd <plug>(lsp-definition)
+if executable('pyls')
+    " pip install python-language-server
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'pyls',
+        \ 'cmd': {server_info->['pyls']},
+        \ 'whitelist': ['python'],
+        \ 'workspace_config': {'pyls': {'configurationSources': 'pyflakes'}}
+        \ })
+endif
+if executable('clangd')
+    augroup lsp_clangd
+        autocmd!
+        autocmd User lsp_setup call lsp#register_server({
+                    \ 'name': 'clangd',
+                    \ 'cmd': {server_info->['clangd']},
+                    \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+                    \ })
+        autocmd FileType c setlocal omnifunc=lsp#complete
+        autocmd FileType cpp setlocal omnifunc=lsp#complete
+        autocmd FileType objc setlocal omnifunc=lsp#complete
+        autocmd FileType objcpp setlocal omnifunc=lsp#complete
+    augroup end
+endif
+inoremap <expr> <c-j> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <c-k> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+imap <c-space> <Plug>(asyncomplete_force_refresh)
+inoremap <expr> <cr> pumvisible() ? "\<C-y><cr>" : "\<cr>"
+
+" let g:lsp_log_verbose = 1
+" let g:lsp_log_file = expand('~/vim-lsp.log')
+" let g:asyncomplete_log_file = expand('~/asyncomplete.log')
+
+let g:lsp_diagnostics_enabled = 1
+" let g:lsp_signs_enabled = 1         " enable signs
+" let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
+
+" ale related
+let b:ale_linters = {'cpp': ['clang', 'clangd', 'ccls', 'clang-check', 'clang-tidy']}
+let g:ale_c_parse_compile_commands = 1
+let g:ale_cpp_clang_options = '-std=c++17 -Wall'
+
 
 " header guard generation                                                                                                               
 function! s:insert_gates()                                                                                                              
@@ -63,12 +92,6 @@ colorscheme OceanicNext
 if has("termguicolors")
     set termguicolors
 endif
-
-" rainbow parentheses related
-" au VimEnter * RainbowParenthesesToggle
-" au Syntax * RainbowParenthesesLoadRound
-" au Syntax * RainbowParenthesesLoadSquare
-" au Syntax * RainbowParenthesesLoadBraces
 
 " au VimEnter * RainbowParentheses
 augroup rainbow_lisp
@@ -103,6 +126,7 @@ let g:rbpt_max = 16
 let g:rbpt_loadcmd_toggle = 0
 
 " airline related
+let g:airline_powerline_fonts = 1
 set laststatus=2
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme='wombat'
@@ -116,75 +140,12 @@ nnoremap <C-]> :Unite grep:.<cr>
 nnoremap <C-n> :Unite bookmark<cr>
 nnoremap <F10> :Unite rtags/references<cr>
 
-
-" ycm related
-let g:ycm_key_list_select_completion   = ['<C-j>', '<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>']
-set completeopt=
-let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_add_preview_to_completeopt = 0
-nnoremap <F9> :YcmCompleter GoTo<cr>
-let g:ycm_semantic_triggers = {'haskell' : ['.']}
-" let g:ycm_python_binary_path = '/usr/bin/python3'
-" let g:ycm_server_python_interpreter = '/usr/bin/python3'
-let g:ycm_python_binary_path = 'python3.6'
-let g:ycm_server_python_interpreter = 'python3.6'
-
-" rtags related
-nnoremap K :call rtags#JumpTo(g:SAME_WINDOW)<CR>
-"""""""""""""""""""""""" !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-"""""""""""""""""""""""" !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-" let g:rtagsRcCmd = "rc --socket-address=172.17.0.2:9999" 
-let g:rtagsRcCmd = "rc --socket-address=127.0.0.1:9999" 
-"""""""""""""""""""""""" !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-"""""""""""""""""""""""" !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 " easy align related
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
-" Chromatica related
-
-let g:chromatica#enable_at_startup=1
-" let g:chromatica#highlight_feature_level=1
-let g:chromatica#responsive_mode=1
-let g:chromatica#libclang_path="/usr/lib/"
-
-" python mode related
-let g:pymode_rope_completion = 0
-let g:pymode_rope_complete_on_dot = 0
-let g:pymode_rope_lookup_project = 0
-let g:pymode_rope = 0
-" let g:pymode_python = 'python3.6'
-let g:pymode_virtualenv = 1
-autocmd FileType python setlocal nonumber
-
-" ghcmod-vim related
-autocmd Filetype haskell nnoremap <Leader>t :GhcModType<cr>
-autocmd Filetype haskell nnoremap <Leader>x :GhcModTypeClear<cr>
-autocmd Filetype haskell nnoremap <Leader>k :GhcModCheck<cr>
-autocmd Filetype haskell nnoremap <Leader>l :GhcModLint<cr>
-autocmd Filetype haskell nnoremap <Leader>s :GhcModSplitFunCase<cr>
-autocmd Filetype haskell nnoremap <Leader>g :GhcModSigCodegen<cr>
-
-" ack related
-let g:unite_source_grep_command = 'ack' 
-let g:unite_source_grep_default_opts = '--no-heading --no-color -k -H'
-
-" vim-javacomplete2 related
-autocmd FileType java setlocal omnifunc=javacomplete#Complete
-autocmd FileType javascript setlocal omnifunc=tern#Complete
-
-
-
-" rainbow_csv related
-" let g:rcsv_colorpairs = [['red', 'red'], ['blue', 'blue'], ['green', 'green'], ['NONE', 'NONE'], ['darkred', 'darkred'], ['darkblue', 'darkblue'], ['darkgreen', 'darkgreen'], ['darkmagenta', 'darkmagenta'], ['darkcyan', 'darkcyan']]
-
 " vimtex related
 let g:vimtex_compiler_latexmk = { 'continuous' : 0 }
-
-" prettier related
-let g:prettier#config#semi = 'false'
 
 " general
 
@@ -194,8 +155,6 @@ set hidden
 " -> disable override of settings using comments at top of files
 " set nomodeline 
 
-
-let g:airline_powerline_fonts = 1
 set nocompatible
 set cursorline
 
@@ -221,9 +180,5 @@ au FileType *.cpp,*.hpp,cpp set sw=2 et
 autocmd BufNewFile,BufRead *.txt set background=light
 autocmd BufNewFile,BufRead CMakeLists.txt set background=light
 
-autocmd Filetype c,cpp nnoremap <F8> :set completefunc=youcompleteme#Complete<cr>
-autocmd Filetype c,cpp inoremap <F7> <esc>:set completefunc=RtagsCompleteFunc<cr>a<c-x><c-u>
-
-autocmd Filetype haskell nnoremap <Leader>c :!ghc %:p<cr>
-autocmd Filetype haskell nnoremap <Leader>r :!%:p:r<cr>
-autocmd Filetype haskell inoremap <Leader><tab> <c-X><c-N>
+nnoremap <C-j> :lnext<CR>
+nnoremap <C-k> :lprevious<CR>
