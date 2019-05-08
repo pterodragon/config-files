@@ -21,11 +21,20 @@ Plug 'lervag/vimtex', {'for': 'tex'}
 
 Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
+" Plug 'prabirshrestha/asyncomplete.vim'
+" Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
+Plug 'Shougo/deoplete.nvim'
+Plug 'lighttiger2505/deoplete-vim-lsp'
 Plug 'w0rp/ale'
 call plug#end()
+
+" deoplete related
+let g:deoplete#auto_complete = 0
+let g:deoplete#enable_at_startup = 1
+inoremap <expr> <c-space>  deoplete#mappings#manual_complete()
+set completeopt-=preview
+
 
 " vim lsp related
 nnoremap <S-k> :LspDefinition<CR>
@@ -55,19 +64,21 @@ if executable('clangd')
 endif
 inoremap <expr> <c-j> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <c-k> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-imap <c-space> <Plug>(asyncomplete_force_refresh)
+" imap <c-space> <Plug>(asyncomplete_force_refresh)
+
 inoremap <expr> <cr> pumvisible() ? "\<C-y><cr>" : "\<cr>"
 
 " let g:lsp_log_verbose = 1
 " let g:lsp_log_file = expand('~/vim-lsp.log')
 " let g:asyncomplete_log_file = expand('~/asyncomplete.log')
 
-let g:lsp_diagnostics_enabled = 1
+let g:lsp_diagnostics_enabled = 0 " use ALE instead
 " let g:lsp_signs_enabled = 1         " enable signs
 " let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
 
 " ale related
 let b:ale_linters = {'cpp': ['clang', 'clangd', 'ccls', 'clang-check', 'clang-tidy']}
+" for cross translation unit references; open multiple buffers of concern
 let g:ale_c_parse_compile_commands = 1
 let g:ale_cpp_clang_options = '-std=c++17 -Wall'
 
