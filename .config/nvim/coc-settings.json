@@ -1,0 +1,19 @@
+{
+  "suggest.minTriggerInputLength": 1,
+  "suggest.autoTrigger": "none",
+  "diagnostic.enable": true,
+  "diagnostic.signOffset": 9999999,
+  "python.formatting.provider": "black",
+  "languageserver": {
+    "ccls": {
+      "command": "ccls",
+      "filetypes": ["c", "cpp", "objc", "objcpp"],
+      "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+      "initializationOptions": {
+        "cache": {
+          "directory": "/tmp/ccls"
+        }
+      }
+    }
+  }
+}
