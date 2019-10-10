@@ -3,10 +3,12 @@
   "suggest.autoTrigger": "none",
   "diagnostic.enable": true,
   "diagnostic.signOffset": 9999999,
+  "diagnostic.displayByAle": true,
   "python.formatting.provider": "black",
   "languageserver": {
     "ccls": {
       "command": "ccls",
+      "args": ["--log-file=/tmp/ccls.log", "-v=1"],
       "filetypes": ["c", "cpp", "objc", "objcpp"],
       "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
       "initializationOptions": {

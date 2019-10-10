@@ -20,14 +20,21 @@ Plug 'ekalinin/Dockerfile.vim'
 Plug 'lervag/vimtex', {'for': 'tex'}
 
 Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
-" Plug 'w0rp/ale'
+Plug 'w0rp/ale'
 call plug#end()
 
 " " ale related
-let b:ale_linters = {'cpp': ['clang', 'clangd', 'ccls', 'clang-check', 'clang-tidy']}
-" for cross translation unit references; open multiple buffers of concern
-let g:ale_c_parse_compile_commands = 1
-let g:ale_cpp_clang_options = '-std=c++17 -Wall'
+" coc will provide the diagnostics
+let g:ale_linters = {
+\   'c': [], 'cpp': [], 'rust': [], 'go': [], 'python': [], 'sh': [],
+\   'html': [], 'css': [], 'javascript': [], 'typescript': [], 'reason': [],
+\   'json': [], 'vue': [],
+\   'tex': [], 'latex': [], 'bib': [], 'bibtex': []
+\ }
+" let b:ale_linters = {'cpp': ['clang', 'clangd', 'ccls', 'clang-check', 'clang-tidy']}
+" " for cross translation unit references; open multiple buffers of concern
+" let g:ale_c_parse_compile_commands = 1
+" let g:ale_cpp_clang_options = '-std=c++17 -Wall'
 
 " header guard generation                                                                                                               
 function! s:insert_gates()                                                                                                              
