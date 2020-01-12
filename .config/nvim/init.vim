@@ -276,6 +276,8 @@ filetype indent on
 :set shiftwidth=4
 " au FileType *.cpp,*.hpp,cpp set sw=2 sts=2 et
 au FileType *.cpp,*.hpp,cpp set sw=2 et
+au FileType *.py set sw=4 et ts=4
+au FileType cmake set sw=2 et ts=2
 
 :set hlsearch
 
