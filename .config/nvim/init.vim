@@ -18,9 +18,11 @@ Plug 'https://github.com/vim-airline/vim-airline-themes'
 Plug 'pboettch/vim-cmake-syntax'
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'lervag/vimtex', {'for': 'tex'}
+Plug 'ARM9/arm-syntax-vim'
 
 Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 Plug 'w0rp/ale'
+
 call plug#end()
 
 " " ale related
@@ -244,7 +246,10 @@ nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
-nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+" " Resume latest coc list
+" nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+nnoremap <silent> <space>p  :<C-u>CocList files<CR>
+nnoremap <silent> <space>g  :<C-u>CocList grep<space>
 
 set statusline^=%{coc#status()}
 

@@ -20,3 +20,7 @@ lg = !"git lg1"
 
 [core]
     editor = nvim
+[pager]
+	color = false
+	show = vim -R -
+
