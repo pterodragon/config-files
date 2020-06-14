@@ -19,6 +19,7 @@ Plug 'pboettch/vim-cmake-syntax'
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'lervag/vimtex', {'for': 'tex'}
 Plug 'ARM9/arm-syntax-vim'
+Plug 'jackguo380/vim-lsp-cxx-highlight'
 
 Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 Plug 'w0rp/ale'
