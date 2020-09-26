@@ -4,6 +4,7 @@ augroup END
 
 " vim-plug related
 call plug#begin('~/.local/share/nvim/plugged')
+Plug 'https://github.com/PeterRincker/vim-argumentative'
 Plug 'https://github.com/mileszs/ack.vim'
 Plug 'https://github.com/mhartington/oceanic-next'
 Plug 'https://github.com/junegunn/vim-easy-align'
@@ -20,6 +21,9 @@ Plug 'ekalinin/Dockerfile.vim'
 Plug 'lervag/vimtex', {'for': 'tex'}
 Plug 'ARM9/arm-syntax-vim'
 Plug 'jackguo380/vim-lsp-cxx-highlight'
+Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins', 'for': 'python'}
+Plug 'nathanaelkane/vim-indent-guides', {'for': ['python', 'cpp']}
+Plug 'MattesGroeger/vim-bookmarks'
 
 Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 Plug 'w0rp/ale'
