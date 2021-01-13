@@ -110,7 +110,6 @@ nnoremap <C-]> :Unite grep:.<cr>
 " nnoremap <C-p> :Unite ack
 nnoremap <C-n> :Unite bookmark<cr>
 " nnoremap <F10> :Unite rtags/references<cr>
-nnoremap <F10> :LspReferences<cr>
 
 " easy align related
 xmap ga <Plug>(EasyAlign)
