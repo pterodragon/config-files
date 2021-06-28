@@ -24,6 +24,9 @@ Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins', 'for': 'python'}
 Plug 'nathanaelkane/vim-indent-guides', {'for': ['python', 'cpp']}
 Plug 'MattesGroeger/vim-bookmarks'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
 
 Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 Plug 'w0rp/ale'
@@ -103,13 +106,6 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme='wombat'
 " let g:airline_theme='papercolor'
 " let g:airline_theme='solarized dark'
-
-" United related
-" nnoremap <C-p> :e **/
-nnoremap <C-]> :Unite grep:.<cr>
-" nnoremap <C-p> :Unite ack
-nnoremap <C-n> :Unite bookmark<cr>
-" nnoremap <F10> :Unite rtags/references<cr>
 
 " easy align related
 xmap ga <Plug>(EasyAlign)
@@ -271,6 +267,7 @@ set cursorline
 
 nnoremap <silent><expr> <f2> ':set wrap! go'.'-+'[&wrap]."=b\r"
 nnoremap <F12> :bd<cr>
+nnoremap <C-]> :bd<cr>
 
 "execute "set <M-j>=\ej"
 nnoremap <M-j> :bnext<CR>
@@ -284,9 +281,12 @@ filetype indent on
 :set tabstop=4
 :set shiftwidth=4
 " au FileType *.cpp,*.hpp,cpp set sw=2 sts=2 et
-au FileType *.cpp,*.hpp,cpp set sw=2 et
+au FileType json,*.cpp,*.hpp,cpp,*.c,*.h,c set sw=2 et
 au FileType *.py set sw=4 et ts=4
+au FileType javascript set sw=2 et ts=2
 au FileType cmake set sw=2 et ts=2
+au FileType yaml set sw=2 et ts=2
+au FileType typescript set sw=2 et ts=2
 
 :set hlsearch
 
@@ -295,3 +295,5 @@ autocmd BufNewFile,BufRead CMakeLists.txt set background=light
 
 nnoremap <C-n> :lnext<CR>
 nnoremap <C-p> :lprevious<CR>
+
+autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescriptreact
