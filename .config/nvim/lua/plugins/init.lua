@@ -11,6 +11,21 @@ return {
     end,
   },
   {
+    "folke/noice.nvim",
+    opts = {
+      lsp = {
+        signature = {
+          enabled = false,
+          auto_open = {
+            enabled = false,
+            trigger = false,
+            throttle = 1000,
+          },
+        },
+      },
+    },
+  },
+  {
     "kylechui/nvim-surround",
     version = "*",
     event = "VeryLazy",
@@ -28,6 +43,7 @@ return {
         "html",
         "css",
         "python",
+        "cpp",
       },
       incremental_selection = {
         enable = true,
