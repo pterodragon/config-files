@@ -1,5 +1,5 @@
 alias vim=nvim
-export VISUAL=vim
+export VISUAL=nvim
 export EDITOR="$VISUAL"
 if [ -f ~/.dir_colors/dircolors ]
     then eval `dircolors ~/.dir_colors/dircolors`
@@ -110,9 +110,34 @@ prompt_context() {
 }
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
 
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init --path)"
+fi
+eval "$(pyenv virtualenv-init -)"
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 alias npm-exec='PATH=$(npm bin):$PATH'
+export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:/usr/local/texlive/2024/bin/x86_64-linux"
+DEBEMAIL="poonlokwing@gmail.com"
+DEBFULLNAME="Lok Wing POON"
+export DEBEMAIL DEBFULLNAME
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+eval `ssh-agent -s`
 eval "$(uv generate-shell-completion zsh)"
+eval "$(uvx --generate-shell-completion zsh)"
+
+# https://github.com/astral-sh/uv/issues/8432#issuecomment-2453494736
+_uv_run_mod() {
+    if [[ "$words[2]" == "run" && "$words[CURRENT]" != -* ]]; then
+        _arguments '*:filename:_files'
+    else
+        _uv "$@"
+    fi
+}
+compdef _uv_run_mod uv
